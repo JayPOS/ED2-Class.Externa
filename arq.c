@@ -1,47 +1,66 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "clientes.h"
 #define MAX 4
 //	PRAZO 3 DE SET!!!
-
-typedef struct cliente{
-	int cod;
-	char nome[50];
-	char data_n[20];
-} Cliente;
 
 typedef struct Memoria{
 	int congelado;
 	Cliente p;
 } Memoria;
 
+//FUNÇÃO LOCALIZA A MENOR CHAVE
+int menor(Cliente** v, int tam){
+	int men = 0;
+	for (int i = 0; i < tam; ++i){
+		if(v[i].p.cod < v[men].p.cod && v[i].congelado != 1)
+			men = i;
+	}
+
+	return men;
+}
+
+//FUNÇÃO PARA GERAR NOME PARA OS ARQUIVOS
+char* gera_nome(int i, const char* nome){
+	char str[100];
+	sprintf(str, "%i", i);
+	strcat(nome, str);
+	strcat(nome, ".dat");
+
+	return nome;
+}
+
 FILE* ord (FILE* in){
 	Memoria v[MAX];
-	int i_men=0, men=0, ice = 0;
+	int i_men = 0, ice = 0, qtd_arq = 1, men = 0;
 
 	for (int i = 0; i < MAX; ++i){
 		v[i].congelado = 0;
-		fread(v[i].p.cod, sizeof(int), 1, in);
+		v[i].p = le(in);
 	}
 
 	FILE* part = fopen("part1.dat", "ab");
-	while(){ //implementar o Le
-		//i_men = func(implementar função para achar o menor) (CHECAR se tá congelado)
-		men = v[i_men].p.cod;
-		fwrite(v[i_men].p.cod, sizeof(int), 1, part);
-		fread(v[i_men].p.cod, sizeof(int), 1, in);	//salvando prox do in no vetor
+	do {
 		if(v[i_men].p.cod < men){
 			v[i_men].congelado = 1;
 			ice++;
 		}
+		i_men = menor(v, MAX);
+		men = v[i_men.p.cod];
+		salva(v[i_men].p, part);
+
 		if(ice == MAX){
 			fclose(part);
-			FILE* part = fopen("part2.dat", "ab"); //implementar um jeito de criar partição com nome em ordem crescente (strcat)
+			qtd_arq++;
+			FILE* part = fopen(gera_nome(qtd_arq, "part"), "ab");
 			for (int i = 0; i < MAX; ++i){
 				v[i].congelado = 0;
 			}
 			ice = 0;
 		}
 	}
+	while ((v[i_men].p = le(in)) != NULL);
 }
 
 int main(){

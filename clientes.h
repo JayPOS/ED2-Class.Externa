@@ -14,11 +14,6 @@ typedef struct cliente{
 	char data_n[20];
 } Cliente;
 
-typedef struct Memoria{
-	int congelado;
-	Cliente p;
-} Memoria;
-
 //BLOCO COM AS FUNÇÕES MAIS BÁSICAS
 
 Cliente *criaCliente(int cod, char *nome, char *data);
