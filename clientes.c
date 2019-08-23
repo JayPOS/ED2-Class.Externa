@@ -1,5 +1,5 @@
 #include "clientes.h"
-
+//CRIAR
 Cliente *criaCliente(int cod, char *nome, char *data)
 {
     Cliente *c = (Cliente *)malloc(sizeof(Cliente));
