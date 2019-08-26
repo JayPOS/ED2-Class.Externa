@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#define MAX 4
+#define MAX 2
 //	PRAZO 3 DE SET!!!
 
 typedef struct cliente{
