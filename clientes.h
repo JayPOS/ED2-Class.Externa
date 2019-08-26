@@ -14,6 +14,11 @@ typedef struct cliente{
 	char data_n[20];
 } Cliente;
 
+typedef struct Memoria{
+	int congelado;
+	Cliente *p;
+} Memoria;
+
 //BLOCO COM AS FUNÇÕES MAIS BÁSICAS
 
 Cliente *criaCliente(int cod, char *nome, char *data);
@@ -25,6 +30,6 @@ int tamanho();
 //BLOCO DAS FUNÇÕES DE ORDENAÇÃO;
 
 FILE *criaParticao(int idPart);
-int menor(Memoria *vetor);
+int menor(Memoria *v, int tam);
 
 #endif

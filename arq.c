@@ -5,16 +5,11 @@
 #define MAX 4
 //	PRAZO 3 DE SET!!!
 
-typedef struct Memoria{
-	int congelado;
-	Cliente p;
-} Memoria;
-
 //FUNÇÃO LOCALIZA A MENOR CHAVE
-int menor(Cliente** v, int tam){
+int menor(Memoria* v, int tam){
 	int men = 0;
 	for (int i = 0; i < tam; ++i){
-		if(v[i].p.cod < v[men].p.cod && v[i].congelado != 1)
+		if(v[i].p->cod < v[men].p->cod && v[i].congelado != 1)
 			men = i;
 	}
 
@@ -42,12 +37,12 @@ FILE* ord (FILE* in){
 
 	FILE* part = fopen("part1.dat", "ab");
 	do {
-		if(v[i_men].p.cod < men){
+		if(v[i_men].p->cod < men){
 			v[i_men].congelado = 1;
 			ice++;
 		}
 		i_men = menor(v, MAX);
-		men = v[i_men.p.cod];
+		men = v[i_men].p->cod;
 		salva(v[i_men].p, part);
 
 		if(ice == MAX){
