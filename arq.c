@@ -16,7 +16,7 @@ int menor(Memoria* v, int tam){
 }
 
 //FUNÇÃO PARA GERAR NOME PARA OS ARQUIVOS
-char* gera_nome(int i, const char* nome){
+char* gera_nome(int i, char* nome){
 	// PROBLEMA NA VARIAVEL NOME
 	char str[100];
 	sprintf(str, "%i", i);
@@ -26,7 +26,7 @@ char* gera_nome(int i, const char* nome){
 	return nome;
 }
 
-FILE* ord (FILE* in){
+void ord (FILE* in){
 	Memoria v[MAX];
 	int i_men = 0, ice = 0, qtd_arq = 1, men = 0;
     Cliente* aux;
