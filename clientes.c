@@ -26,6 +26,7 @@ Cliente *le(FILE *in)
     if (0 >= fread(&c->cod, sizeof(int), 1, in))
     {
         free(c);
+        printf("sefudeu\n");
         return NULL;
     }
     fread(c->nome, sizeof(char), sizeof(c->nome), in);
