@@ -12,13 +12,14 @@ Cliente *criaCliente(int cod, char *nome, char *data)
 	return c;
 }
 
-void salva(Cliente *p, FILE *out)
+Cliente *salva(Cliente *p, FILE *out)
 {
     fwrite(&p->cod, sizeof(int), 1, out);
     fwrite(p->nome, sizeof(char), sizeof(p->nome), out);
     fwrite(p->data_n, sizeof(char), sizeof(p->data_n), out);
 
     free(p);
+    return NULL;
 }
 Cliente *le(FILE *in)
 {
@@ -26,7 +27,7 @@ Cliente *le(FILE *in)
     if (0 >= fread(&c->cod, sizeof(int), 1, in))
     {
         free(c);
-        printf("sefudeu\n");
+        // printf("sefudeu\n");
         return NULL;
     }
     fread(c->nome, sizeof(char), sizeof(c->nome), in);
