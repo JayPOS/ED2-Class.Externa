@@ -203,6 +203,7 @@ void ord2(FILE *in)
 		}
 	}
 	fclose(part);
+	free(v);
 }
 int main(){
 	FILE* p;
