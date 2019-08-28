@@ -12,14 +12,14 @@ Cliente *criaCliente(int cod, char *nome, char *data)
 	return c;
 }
 
-Cliente *salva(Cliente *p, FILE *out)
+void salva(Cliente *p, FILE *out)
 {
     fwrite(&p->cod, sizeof(int), 1, out);
     fwrite(p->nome, sizeof(char), sizeof(p->nome), out);
     fwrite(p->data_n, sizeof(char), sizeof(p->data_n), out);
 
     free(p);
-    return NULL;
+    // return NULL;
 }
 Cliente *le(FILE *in)
 {

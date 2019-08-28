@@ -22,7 +22,7 @@ typedef struct Memoria{
 //BLOCO COM AS FUNÇÕES MAIS BÁSICAS
 
 Cliente *criaCliente(int cod, char *nome, char *data);
-Cliente *salva(Cliente *p, FILE *out);
+void salva(Cliente *p, FILE *out);
 Cliente *le(FILE *in);
 void imprime(Cliente *p);
 int tamanho();
