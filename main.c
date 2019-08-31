@@ -47,6 +47,17 @@ int menor(Memoria *v, int tam){
 	return men;
 }
 
+int all_ice(Memoria *v, int tam)
+{
+	int i;
+	for (i = 0; i < tam; i++)
+	{
+		if (v[i].congelado == 0 && v[i].p != NULL)
+			return 0;
+	}
+	return 1;
+}
+
 //FUNÇÃO PARA GERAR NOME PARA OS ARQUIVOS
 char* gera_nome(int i){
 	// PROBLEMA NA VARIAVEL NOME
@@ -84,14 +95,20 @@ void substituicao(FILE* in)
 		salva(v[min].p, part);
 	}while((v[min].p = le(in)) != NULL); //lê até o final do arquivo
 	
-	if(!vazio(v))
-	{
+for (int i = 0; i < MAX; ++i){ //grava os registros não congelados no arquivo atual
+		min = menor(v, MAX);
+		salva(v[min].p, part);
+		v[min].p = NULL;
+	}
+
+	for (int i = 0; i < MAX; ++i) //descongela tds q sobraram na memoria
+		v[i].congelado = 0;
+
+	if(vazio(v) != 1){
 		arq++;
 		fclose(part);
-		part = fopen(gera_nome(arq), "w+b");
-		for (int i = 0; i < MAX; ++i) //descongela tds q sobraram na memoria
-			v[i].congelado = 0;
-		for (int i = 0; vazio(v) != 1; ++i){ //grava tds q sobraram na memoria
+		FILE *part = fopen(gera_nome(arq), "w+b");
+		for (int i = 0; vazio(v) != 1; ++i){ //grava tds q sobraram na memoria congelados em um novo arquivo
 			min = menor(v, MAX);
 			salva(v[min].p, part);
 			v[min].p = NULL;
