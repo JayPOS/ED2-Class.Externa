@@ -47,17 +47,6 @@ int menor(Memoria *v, int tam){
 	return men;
 }
 
-int all_ice(Memoria *v, int tam)
-{
-	int i;
-	for (i = 0; i < tam; i++)
-	{
-		if (v[i].congelado == 0 && v[i].p != NULL)
-			return 0;
-	}
-	return 1;
-}
-
 //FUNÇÃO PARA GERAR NOME PARA OS ARQUIVOS
 char* gera_nome(int i){
 	// PROBLEMA NA VARIAVEL NOME
@@ -65,7 +54,7 @@ char* gera_nome(int i){
 	sprintf(str, "part%i.dat", i);
 	return str;
 }
-void substituicao(FILE* in)
+int substituicao(FILE* in)
 {
 	int min, arq = 1, chave_ant = -1, ice = 0;
 	char nome[15];
@@ -95,7 +84,8 @@ void substituicao(FILE* in)
 		salva(v[min].p, part);
 	}while((v[min].p = le(in)) != NULL); //lê até o final do arquivo
 	
-for (int i = 0; i < MAX; ++i){ //grava os registros não congelados no arquivo atual
+
+	for (int i = 0; i < MAX-(ice+1); ++i){ //grava os registros não congelados no arquivo atual
 		min = menor(v, MAX);
 		salva(v[min].p, part);
 		v[min].p = NULL;
@@ -115,6 +105,7 @@ for (int i = 0; i < MAX; ++i){ //grava os registros não congelados no arquivo a
 		}
 	}
 	fclose(part);
+	return arq;
 }
 
 // FUNÇÕES PARA O MENU:
@@ -195,6 +186,61 @@ void imprime_reg(char *nome)
 	}
 }
 
+void modificaReg()
+{
+	int escolha = -1;
+	// char nomeArq[100];
+	while(escolha != 0)
+	{
+		printf("%sEscolha a modificação:\n%s\n", CLEAR, LINHA);
+		printf("1- Adicionar elemento\n");
+		printf("2- Modificar Registro\n");
+		printf("3- Deletar Registro\n");
+		printf("%s\nOpção: ", LINHA);
+		scanf("%d", &escolha);
+
+		switch (escolha)
+		{
+		case 1:
+			{
+				char nomeArq[100];
+				Cliente *aux = (Cliente *)malloc(sizeof(Cliente));
+				FILE *f;
+				
+				printf("%sDigite o nome do arquivo: ", CLEAR);
+				scanf("%s", nomeArq);
+				f = fopen(nomeArq, "ab");
+
+				printf("\n%s\nDigite o código do Cliente: ", LINHA);
+				scanf(" %d", &aux->cod);
+				printf("%s\nDigite o nome do Cliente: ", LINHA);
+				scanf("%s", aux->nome);
+				printf("%s\nDigite o data de nascimento do Cliente: ", LINHA);
+				scanf("%s", aux->data_n);
+
+				salva(aux, f);
+
+				free(aux);
+
+				break;
+			}
+		case 2:
+			{
+				// char nome[100];
+
+				// printf("");
+				// break;
+			}
+		case 3:
+			{
+				break;
+			}
+		}
+
+	}
+
+}
+
 void casoPronto()
 {
 	FILE* p;
@@ -264,15 +310,10 @@ void casoPronto()
 
 	for (int i = 1; i < 14; ++i){
 		FILE *part = fopen(gera_nome(i), "rb");
-		printf("ARQUIVO %d\n", i);
+		printf("\n\n%s\nARQUIVO %d\n%s\n", LINHA, i, LINHA);
 		imprimeArq(part);
 		fclose(part);
 	}
-	/*for (int i = 0; i < 10; i++){
-    // gerando valores aleatórios entre zero e 100
-		aux = rand() % 100;
-    	fwrite(&aux, sizeof(int), 1, p);
-  	}*/
 	fclose(p);
 }
 
@@ -317,6 +358,15 @@ void menu()
 				printf("%s", CLEAR);
 				break;
 			case 3:
+				{
+					printf("%sAinda não está pronto!\n\n", CLEAR);
+					printf("\n\nDigite -1 para voltar: ");
+					while (escolha != -1)
+					{
+						scanf("%d", &escolha);
+					}
+					printf("%s", CLEAR);
+				}
 				break;
 			case 4:
 				printf("%s", CLEAR);
@@ -329,7 +379,40 @@ void menu()
 				printf("%s", CLEAR);
 				break;
 			case 5:
-				break;
+				{
+					int part_num, i;
+					char nome[100];
+					FILE *file;
+
+					printf("%sDigite o nome do registro: ", CLEAR);
+					scanf("%s", nome);
+
+					file = fopen(nome, "rb");
+					if (file == NULL)
+					{
+						printf("Arquivo não pode ser aberto!\n");
+						printf("\n\nDigite -1 para voltar: ");
+						while (escolha != -1)
+						{
+							scanf("%d", &escolha);
+						}
+					}
+					else
+					{
+						part_num = substituicao(file);
+						for (i = 1; i <= part_num; i++)
+						{
+							printf("\n\n%s\nARQUIVO %d\n%s\n", LINHA, i, LINHA);
+							imprime_reg(gera_nome(i));
+						}
+						printf("\n\nDigite -1 para voltar: ");
+						while (escolha != -1)
+						{
+							scanf("%d", &escolha);
+						}
+					}
+					break;
+				}
 		}
 	}
 }
