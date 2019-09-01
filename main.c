@@ -12,6 +12,15 @@
 //	PRAZO 3 DE SET!!!
 
 //FUNÇÃO LOCALIZA A MENOR CHAVE
+
+Cliente *ler_txt(FILE *in)
+{
+	Cliente *aux = (Cliente *)malloc(sizeof(Cliente));
+	if(fscanf(in, "%d %s %s", &aux->cod, aux->nome, aux->data_n) <= 0)
+		return NULL;
+
+	return aux;
+}
 void imprimeArq(FILE *in)
 {
 	Cliente *aux = le(in);
@@ -116,20 +125,20 @@ void criar_registro(int tipo)
 		char nomeArq[100];
 		char nomeDest[100];
 		
-		printf("Digite o nome do arquivo txt: ");
+		printf("%sDigite o nome do arquivo txt: " CLEAR);
 		scanf("%s", nomeArq);
-		printf("Digite o nome do novo registro: ");
+		printf("%s\nDigite o nome do novo registro: ", LINHA);
 		scanf("%s", nomeDest);
 
 		FILE *f1 = fopen(nomeArq, "r");
 		if (f1 != NULL)
 		{
 			FILE *f2 = fopen(nomeDest, "wb");
-			Cliente *aux = le(f1);
+			Cliente *aux = ler_txt(f1);
 			do
 			{
 				salva(aux, f2);
-				aux = le(f1);
+				aux = ler_txt(f1);
 			} while (aux != NULL);
 			
 			fclose(f2);
