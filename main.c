@@ -125,7 +125,7 @@ void criar_registro(int tipo)
 		char nomeArq[100];
 		char nomeDest[100];
 		
-		printf("%sDigite o nome do arquivo txt: " CLEAR);
+		printf("%sDigite o nome do arquivo txt: ", CLEAR);
 		scanf("%s", nomeArq);
 		printf("%s\nDigite o nome do novo registro: ", LINHA);
 		scanf("%s", nomeDest);
@@ -181,6 +181,7 @@ void criar_registro(int tipo)
 		}
 		printf("%s", CLEAR);
 		free(c);
+		fclose(f1);
 	}
 }
 
@@ -228,7 +229,7 @@ void modificaReg()
 				scanf("%s", aux->data_n);
 
 				salva(aux, f);
-
+				fclose(f);
 				free(aux);
 
 				break;
