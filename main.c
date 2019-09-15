@@ -3,6 +3,7 @@
 // #include <string.h>
 // #include "clientes.h"
 #include "aux.c"
+#include "inter.c"
 
 #define LINHA "---------------------------------------"
 #define CLEAR "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
@@ -66,6 +67,12 @@ int substituicao(FILE* in)
 	}
 	fclose(part);
 	return arq;
+}
+
+//intercalação
+void interecalacao()
+{
+	
 }
 
 void casoPronto()
@@ -147,6 +154,7 @@ void menu()
 {
 	int escolha = -1;
 	int tipo;
+	int part_num;
 	char nome[100];
 	while(escolha != 0)
 	{
@@ -186,7 +194,7 @@ void menu()
 			case 3:
 				{
 					// printf("%sAinda não está pronto!\n\n", CLEAR);
-					modificaReg();
+					modificaReg(&part_num);
 					printf("\n\nDigite -1 para voltar: ");
 					while (escolha != -1)
 					{
@@ -207,7 +215,7 @@ void menu()
 				break;
 			case 5:
 				{
-					int part_num, i;
+					int i;
 					char nome[100];
 					FILE *file;
 

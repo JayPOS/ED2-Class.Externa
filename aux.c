@@ -2,14 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include "clientes.h"
+#include "inter.h"
+
+#define DESATIVADO 0
 
 #define LINHA "---------------------------------------"
 #define CLEAR "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 
 #define ARQUIVO 1
 #define TERMINAL 2
-
-
 
 Cliente *ler_txt(FILE *in)
 {
@@ -141,7 +142,7 @@ void imprime_reg(char *nome)
 	}
 }
 
-void modificaReg()
+void modificaReg(int *part_num)
 {
 	int escolha = -1;
 	// char nomeArq[100];
@@ -208,6 +209,7 @@ void modificaReg()
 			}
         case 4:
             {
+				part_num = 0;
                 int cont = 1;
                 char nome[40];
                 char comando[50];
@@ -238,5 +240,44 @@ void modificaReg()
 		}
 
 	}
-
 }
+// Inter *inicializar(int tam)
+// {
+//   Inter *interc = (Inter *)malloc(sizeof(Inter));
+//   interc->tam = tam;
+//   interc->particoes = (Elem **)malloc(sizeof(Elem *)*tam);
+//   interc->heap = (Elem **)malloc(sizeof(Elem *)*((2*tam)-1));
+//   return interc;
+// }
+// Inter *preparaParts(Inter *inter)
+// {
+//   int i;
+//   for (i = 0; i < inter->tam; i++)
+//   {
+//     inter->particoes[i] = (Elem *)malloc(sizeof(Elem));
+//     inter->particoes[i]->part = fopen(gera_nome(i), "rb");
+//     inter->particoes[i]->p = le(inter->particoes[i]->part);
+//   }
+//   return inter;
+// }
+// Inter *preparaHeap(Inter *inter)
+// {
+//   int i;
+//   for(i = 0; i < (2*inter->tam)-1; i++)
+//   {
+    
+//     if (i < inter->tam-1)
+//     {
+//       inter->heap[i]->part = NULL;
+//       inter->heap[i]->p = (Cliente *)malloc(sizeof(Cliente));
+//       inter->heap[i]->p->cod = DESATIVADO;
+//     }
+//     else
+//     {
+//       inter->heap[i]->part = inter->particoes[i-(inter->tam-1)]->part;
+//       inter->heap[i]->p = (Cliente *)malloc(sizeof(Cliente));
+//       inter->heap[i]->p = inter->particoes[i-(inter->tam-1)]->p;
+//     }
+//   }
+//   return inter;
+// }
