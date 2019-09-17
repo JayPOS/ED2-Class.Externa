@@ -25,6 +25,6 @@ Inter *inicializar(int tam);
 Inter *insere_heap();
 Inter *preparaParts(Inter *i);
 Inter *preparaHeap(Inter *i);
-void intercalar();
+int intercalar();
 
 #endif 

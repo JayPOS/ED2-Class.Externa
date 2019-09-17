@@ -69,13 +69,7 @@ int substituicao(FILE* in)
 	return arq;
 }
 
-//intercalação
-void interecalacao()
-{
-	
-}
-
-void casoPronto()
+void casoPronto(int *part_num)
 {
 	FILE* p;
 	p = fopen("arquivo.dat", "w+b");
@@ -136,7 +130,7 @@ void casoPronto()
 	salva(criaCliente(80, "Alana", "25/08/1976"), p);
 
 	rewind(p);
-	substituicao(p);
+	*part_num = substituicao(p);
 	
 	rewind(p);
 	imprimeArq(p);
@@ -154,7 +148,7 @@ void menu()
 {
 	int escolha = -1;
 	int tipo;
-	int part_num;
+	int part_num = 0;
 	char nome[100];
 	while(escolha != 0)
 	{
@@ -163,6 +157,7 @@ void menu()
 		printf("3- Modificar Arquivos\n");
 		printf("4- Rodar Caso Pronto\n");
 		printf("5- Rodar Algoritmo\n");
+		printf("6- Intercalar\n");
 		printf("0- Sair\n\n%s\n", LINHA);
 		printf("Opção: ");
 		if(!scanf("%d", &escolha))
@@ -195,17 +190,12 @@ void menu()
 				{
 					// printf("%sAinda não está pronto!\n\n", CLEAR);
 					modificaReg(&part_num);
-					printf("\n\nDigite -1 para voltar: ");
-					while (escolha != -1)
-					{
-						scanf("%d", &escolha);
-					}
 					printf("%s", CLEAR);
 				}
 				break;
 			case 4:
 				printf("%s", CLEAR);
-				casoPronto();
+				casoPronto(&part_num);
 				printf("\n\nDigite -1 para voltar: ");
 				while (escolha != -1)
 				{
@@ -248,6 +238,36 @@ void menu()
 					}
 					break;
 				}
+			case 6:
+			{
+				int i;
+				char nome[100];
+				FILE *file;
+
+				printf("%sDigite o nome do arquivo para intercalar (partições devem existir): ", CLEAR);
+				scanf("%s", nome);
+
+				file = fopen(nome, "wb");
+				if (file == NULL)
+				{
+					printf("Arquivo não pode ser aberto!\n");
+					printf("\n\nDigite -1 para voltar: ");
+					while (escolha != -1)
+					{
+						scanf("%d", &escolha);
+					}
+				}
+				else
+				{
+					intercalar(part_num);
+					printf("\n\nDigite -1 para voltar: ");
+					while (escolha != -1)
+					{
+						scanf("%d", &escolha);
+					}
+				}
+				
+			}
 		}
 	}
 }
