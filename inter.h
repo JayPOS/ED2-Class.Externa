@@ -12,6 +12,7 @@ typedef struct elem
 {
 	Cliente *p;
 	FILE *part;
+  int id;
 } Elem;
 
 typedef struct heap

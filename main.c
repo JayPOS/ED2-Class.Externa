@@ -3,7 +3,7 @@
 // #include <string.h>
 // #include "clientes.h"
 #include "aux.c"
-#include "inter.c"
+#include "inter2.c"
 
 #define LINHA "---------------------------------------"
 #define CLEAR "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
@@ -244,14 +244,11 @@ void menu()
 				char nome[100];
 				FILE *file;
 
-				printf("%sDigite o nome do arquivo para intercalar (partições devem existir): ", CLEAR);
-				scanf("%s", nome);
-
-				file = fopen(nome, "wb");
+				file = fopen("resultado.dat", "w+b");
 				if (file == NULL)
 				{
 					printf("Arquivo não pode ser aberto!\n");
-					printf("\n\nDigite -1 para voltar: ");
+					printf("\n\nDigite 0 para voltar: ");
 					while (escolha != -1)
 					{
 						scanf("%d", &escolha);
@@ -259,7 +256,7 @@ void menu()
 				}
 				else
 				{
-					intercalar(part_num);
+					intercalar(part_num, file);
 					printf("\n\nDigite -1 para voltar: ");
 					while (escolha != -1)
 					{
