@@ -2,7 +2,7 @@
 // #include <stdlib.h>
 // #include <string.h>
 // #include "clientes.h"
-#include "aux.c"
+#include "_aux.c"
 #include "inter.c"
 
 #define LINHA "---------------------------------------"
