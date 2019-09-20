@@ -24,6 +24,7 @@ typedef struct Memoria{
 Cliente *criaCliente(int cod, char *nome, char *data);
 void salva(Cliente *p, FILE *out);
 Cliente *le(FILE *in);
+void le_tudo(FILE *in);
 void imprime(Cliente *p);
 int tamanho();
 

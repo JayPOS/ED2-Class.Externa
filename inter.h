@@ -22,9 +22,13 @@ typedef struct heap
 } Inter;
 
 Inter *inicializar(int tam);
-Inter *insere_heap();
-Inter *preparaParts(Inter *i);
-Inter *preparaHeap(Inter *i);
-int intercalar();
+Inter *preparaParts(Inter *inter);
+Inter *preparaHeap(Inter *inter);
+Elem *ordena_inicio(Elem **heap, int inicio);
+void printaHeap(Inter *inter);
+void printaParticao(Inter *inter);
+Inter *insere_heap(Inter* i, FILE* file);
+Inter* subir(Elem** heap, int inicio);
+int intercalar(int part_num, FILE* file);
 
 #endif 

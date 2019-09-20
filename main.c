@@ -79,7 +79,7 @@ void casoPronto(int *part_num)
 	salva(criaCliente(76, "Natã", "23/09/1998"), p);
 	salva(criaCliente(75, "Alana", "25/08/1976"), p);
 	salva(criaCliente(59, "Jefferson", "14/07/1878"), p);
-	salva(criaCliente(6, "Bárbara", "19/05/2000"), p);
+	/*salva(criaCliente(6, "Bárbara", "19/05/2000"), p);
 	salva(criaCliente(7, "João", "21/07/2000"), p);
 	salva(criaCliente(74, "Natã", "23/09/1998"), p);
 	salva(criaCliente(48, "Alana", "25/08/1976"), p);
@@ -127,7 +127,7 @@ void casoPronto(int *part_num)
 	salva(criaCliente(36, "Bárbara", "19/05/2000"), p);
 	salva(criaCliente(47, "João", "21/07/2000"), p);
 	salva(criaCliente(31, "Natã", "23/09/1998"), p);
-	salva(criaCliente(80, "Alana", "25/08/1976"), p);
+	salva(criaCliente(80, "Alana", "25/08/1976"), p);*/
 
 	rewind(p);
 	*part_num = substituicao(p);
@@ -135,7 +135,7 @@ void casoPronto(int *part_num)
 	rewind(p);
 	imprimeArq(p);
 
-	for (int i = 1; i < 14; ++i){
+	for (int i = 1; i <= *part_num; ++i){
 		FILE *part = fopen(gera_nome(i), "rb");
 		printf("\n\n%s\nARQUIVO %d\n%s\n", LINHA, i, LINHA);
 		imprimeArq(part);
@@ -240,7 +240,6 @@ void menu()
 				}
 			case 6:
 			{
-				int i;
 				char nome[100];
 				FILE *file;
 
@@ -259,7 +258,7 @@ void menu()
 				}
 				else
 				{
-					intercalar(part_num);
+					intercalar(part_num, file);
 					printf("\n\nDigite -1 para voltar: ");
 					while (escolha != -1)
 					{
