@@ -59,7 +59,7 @@ int menor(Memoria *v, int tam){
 char* gera_nome(int i){
 	// PROBLEMA NA VARIAVEL NOME
 	char *str = (char *)malloc(sizeof(char)*15);
-	sprintf(str, "part%i.dat", i);
+	sprintf(str, "./particoes/part%i.dat", i);
 	return str;
 }
 
@@ -70,11 +70,14 @@ void criar_registro(int tipo)
 	{
 		char nomeArq[100];
 		char nomeDest[100];
+		strcpy(nomeDest, "./registros/");
 		
 		printf("%sDigite o nome do arquivo txt: ", CLEAR);
 		scanf("%s", nomeArq);
 		printf("%s\nDigite o nome do novo registro: ", LINHA);
-		scanf("%s", nomeDest);
+		char aux[30];
+		scanf("%s", aux);
+		strcat(nomeDest, aux);
 
 		FILE *f1 = fopen(nomeArq, "r");
 		if (f1 != NULL)
@@ -99,11 +102,13 @@ void criar_registro(int tipo)
 	if (tipo == TERMINAL)
 	{
 		char nomeDest[100];
+		char aux[30];
 		int qtd, i;
 		Cliente **c;
 
 		printf("\n%s\nDigite o nome do novo registro: ", LINHA);
-		scanf("%s", nomeDest);
+		scanf("%s", aux);
+		strcat(nomeDest, aux);
 
 		FILE *f1 = fopen(nomeDest, "wb");
 
@@ -162,11 +167,14 @@ void modificaReg(int *part_num)
 		case 1:
 			{
 				char nomeArq[100];
+				char aux2[30];
 				Cliente *aux = (Cliente *)malloc(sizeof(Cliente));
 				FILE *f;
 				
 				printf("%sDigite o nome do arquivo: ", CLEAR);
-				scanf("%s", nomeArq);
+				scanf("%s", aux2);
+				strcpy(nomeArq, "./registros/");
+				strcat(nomeArq, aux2);
 				f = fopen(nomeArq, "ab");
 
 				printf("\n%s\nDigite o código do Cliente: ", LINHA);
@@ -184,54 +192,41 @@ void modificaReg(int *part_num)
 			}
 		case 2:
 			{
-                 printf("Ainda não está pronto!\n\nDigite -1 para voltar: ");
-				while (escolha != -1)
-				{
-					scanf("%d", &escolha);
-				}
+				int i;
+                printf("Ainda não está pronto!");
+				printf("\n\nDigite 0 para voltar: ");
+					while (i != 0)
+					{
+						scanf("%d", &i);
+					}
 				printf("%s", CLEAR);
 			}
 		case 3:
 			{
+				int i;
                 char nome[40];
                 char comando[50];
                 printf("%sDigite o nome do registro a ser removido: ", CLEAR);
                 scanf("%s", nome);
                 sprintf(comando ,"rm -r %s", nome);
                 system(comando);
-                printf("\n\nDigite -1 para voltar: ");
-				while (escolha != -1)
-				{
-					scanf("%d", &escolha);
-				}
+                printf("\n\nDigite 0 para voltar: ");
+					while (i != 0)
+					{
+						scanf("%d", &i);
+					}
 				printf("%s", CLEAR);
 				break;
 			}
         case 4:
             {
+				int i;
 				part_num = 0;
-                int cont = 1;
-                char nome[40];
-                char comando[50];
-                FILE *aux;
-                sprintf(nome, "part%d.dat", cont);
-                do
-                {
-                    aux = fopen(nome, "rb");
-                    if (aux != NULL)
-                    {
-                        fclose(aux);
-                        sprintf(comando, "rm -r %s", nome);
-                        system(comando);
-                        cont++;
-                        sprintf(nome, "part%d.dat", cont);
-                    }
-
-                } while (aux != NULL);
-                printf("\n\nDigite -1 para voltar: ");
-				while (escolha != -1)
+                system("rm -r ./particoes/part*.dat");
+                printf("\n\nDigite 0 para voltar: ");
+				while (i != 0)
 				{
-					scanf("%d", &escolha);
+					scanf("%d", &i);
 				}
 				printf("%s", CLEAR);
 				break;
@@ -241,43 +236,3 @@ void modificaReg(int *part_num)
 
 	}
 }
-// Inter *inicializar(int tam)
-// {
-//   Inter *interc = (Inter *)malloc(sizeof(Inter));
-//   interc->tam = tam;
-//   interc->particoes = (Elem **)malloc(sizeof(Elem *)*tam);
-//   interc->heap = (Elem **)malloc(sizeof(Elem *)*((2*tam)-1));
-//   return interc;
-// }
-// Inter *preparaParts(Inter *inter)
-// {
-//   int i;
-//   for (i = 0; i < inter->tam; i++)
-//   {
-//     inter->particoes[i] = (Elem *)malloc(sizeof(Elem));
-//     inter->particoes[i]->part = fopen(gera_nome(i), "rb");
-//     inter->particoes[i]->p = le(inter->particoes[i]->part);
-//   }
-//   return inter;
-// }
-// Inter *preparaHeap(Inter *inter)
-// {
-//   int i;
-//   for(i = 0; i < (2*inter->tam)-1; i++)
-//   {
-    
-//     if (i < inter->tam-1)
-//     {
-//       inter->heap[i]->part = NULL;
-//       inter->heap[i]->p = (Cliente *)malloc(sizeof(Cliente));
-//       inter->heap[i]->p->cod = DESATIVADO;
-//     }
-//     else
-//     {
-//       inter->heap[i]->part = inter->particoes[i-(inter->tam-1)]->part;
-//       inter->heap[i]->p = (Cliente *)malloc(sizeof(Cliente));
-//       inter->heap[i]->p = inter->particoes[i-(inter->tam-1)]->p;
-//     }
-//   }
-//   return inter;
-// }

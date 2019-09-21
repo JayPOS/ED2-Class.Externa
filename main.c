@@ -3,7 +3,7 @@
 // #include <string.h>
 // #include "clientes.h"
 #include "aux.c"
-#include "inter2.c"
+#include "inter.c"
 
 #define LINHA "---------------------------------------"
 #define CLEAR "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
@@ -15,6 +15,26 @@
 
 //FUNÇÃO LOCALIZA A MENOR CHAVE
 
+
+int partCounter()
+{
+	int i = 0;
+	FILE *aux;
+	while(1)
+	{
+		aux = fopen(gera_nome(i+1), "rb");
+		if (aux == NULL)
+		{
+			break;
+		}
+		else
+		{
+			i++;
+			fclose(aux);
+		}
+	}
+	return i;
+}
 
 int substituicao(FILE* in)
 {
@@ -72,7 +92,7 @@ int substituicao(FILE* in)
 void casoPronto(int *part_num)
 {
 	FILE* p;
-	p = fopen("arquivo.dat", "w+b");
+	p = fopen("./registros/arquivo.dat", "w+b");
 	
 	salva(criaCliente(29, "Bárbara", "19/05/2000"), p);
 	salva(criaCliente(14, "João", "21/07/2000"), p);
@@ -146,12 +166,14 @@ void casoPronto(int *part_num)
 
 void menu()
 {
+	int i;
 	int escolha = -1;
 	int tipo;
 	int part_num = 0;
 	char nome[100];
 	while(escolha != 0)
 	{
+		i = -1;
 		printf("\n%s\n\n1- Criar Registro\n", LINHA);
 		printf("2- Imprimir Registro\n");
 		printf("3- Modificar Arquivos\n");
@@ -166,6 +188,7 @@ void menu()
 		switch(escolha)
 		{
 			case 1:
+			{
 				printf("%s", CLEAR);
 				printf("1- Arquivo\n");
 				printf("2- Entrada Padrão\n");
@@ -173,19 +196,22 @@ void menu()
 				scanf("%d", &tipo);
 				criar_registro(tipo);
 				break;
+			}
 			case 2:
+			{
 				printf("%s", CLEAR);
 				printf("Digite o nome do arquivo que contêm o registro: ");
 				scanf("%s", nome);
 				printf("\n\n");
 				imprime_reg(nome);
-				printf("\n\nDigite -1 para voltar: ");
-				while (escolha != -1)
+				printf("\n\nDigite 0 para voltar: ");
+				while (i != 0)
 				{
-					scanf("%d", &escolha);
+					scanf("%d", &i);
 				}
 				printf("%s", CLEAR);
 				break;
+			}
 			case 3:
 				{
 					// printf("%sAinda não está pronto!\n\n", CLEAR);
@@ -194,23 +220,27 @@ void menu()
 				}
 				break;
 			case 4:
+			{
 				printf("%s", CLEAR);
 				casoPronto(&part_num);
-				printf("\n\nDigite -1 para voltar: ");
-				while (escolha != -1)
-				{
-					scanf("%d", &escolha);
-				}
+				printf("\n\nDigite 0 para voltar: ");
+					while (i != 0)
+					{
+						scanf("%d", &i);
+					}
 				printf("%s", CLEAR);
 				break;
+			}
 			case 5:
 				{
-					int i;
 					char nome[100];
+					char aux[70];
 					FILE *file;
 
 					printf("%sDigite o nome do registro: ", CLEAR);
-					scanf("%s", nome);
+					scanf("%s", aux);
+					strcpy(nome, "./registros/");
+					strcat(nome, aux);
 
 					file = fopen(nome, "rb");
 					if (file == NULL)
@@ -230,42 +260,34 @@ void menu()
 							printf("\n\n%s\nARQUIVO %d\n%s\n", LINHA, i, LINHA);
 							imprime_reg(gera_nome(i));
 						}
-						printf("\n\nDigite -1 para voltar: ");
-						while (escolha != -1)
+						printf("\n\nDigite 0 para voltar: ");
+						while (i != 0)
 						{
-							scanf("%d", &escolha);
+							scanf("%d", &i);
 						}
 					}
 					break;
 				}
 			case 6:
 			{
-				int i;
-				char nome[100];
 				FILE *file;
-
 				file = fopen("resultado.dat", "w+b");
 				if (file == NULL)
 				{
 					printf("Arquivo não pode ser aberto!\n");
-					printf("\n\nDigite 0 para voltar: ");
-					while (escolha != -1)
-					{
-						scanf("%d", &escolha);
-					}
 				}
 				else
 				{
-					intercalar(part_num, file);
-					printf("\n\nDigite -1 para voltar: ");
-					while (escolha != -1)
-					{
-						scanf("%d", &escolha);
-					}
+					intercalar(partCounter(), file);
+				}	
+				printf("\n\nDigite 0 para voltar: ");
+				while (i != 0)
+				{
+					scanf("%d", &i);
 				}
-				
 			}
 		}
+		// escolha = -1;
 	}
 }
 int main()
