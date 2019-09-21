@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "clientes.h"
-#include "inter.h"
+#include "headers/inter.h"
+#include "headers/clientes.h"
 
 #define DESATIVADO 0
 

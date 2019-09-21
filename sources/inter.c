@@ -1,4 +1,4 @@
-#include "inter.h"
+#include "headers/inter.h"
 
 #define LINHA "---------------------------------------"
 #define CLEAR "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"

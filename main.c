@@ -1,9 +1,5 @@
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <string.h>
-// #include "clientes.h"
-#include "aux.c"
-#include "inter.c"
+#include "sources/aux.c"
+#include "sources/inter.c"
 
 #define LINHA "---------------------------------------"
 #define CLEAR "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"

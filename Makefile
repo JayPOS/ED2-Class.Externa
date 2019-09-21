@@ -2,4 +2,4 @@ CC = gcc
 FLAG = -Wall
 
 all:
-	$(CC) clientes.c -o main main.c -Wall
+	$(CC) ./sources/clientes.c -o main main.c -Wall
